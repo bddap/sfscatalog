@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+        fetch('english.json')
+            .then(a => a.json()
+                .then(o => o.forEach(makeAlbum)))
+
+        function makeAlbum(album) {
+            const p = spawnElement(document.body, 'h2')
+            p.innerText = album.name
+            album.songs.forEach(makeSong)
+        }
+
+        function spawnElement(parent, type) {
+            const p = document.createElement(type)
+            parent.appendChild(p)
+            return p
+        }
+
+        function makeSong(song) {
+            const p = spawnElement(document.body, 'h3')
+            p.innerText = song.name
+            makePlayer(song.audio)
+            makeLyric(song.qa)
+            spawnElement(document.body, 'hr')
+        }
+
+        function makePlayer(url) {
+            const a = spawnElement(document.body, 'audio')
+            a.preload = 'none'
+            a.src = url
+            a.controls = 'controls'
+        }
+
+        function makeLyric(qa) {
+            qa.forEach(line => {
+                if (line.q) {
+                    spawnElement(document.body, 'p').innerText = "Q: " + line.q
+                }
+                if (line.a) {
+                    spawnElement(document.body, 'p').innerText = line.a
+                }
+                if (line.v) {
+                    spawnElement(document.body, 'strong').innerText = line.v
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
