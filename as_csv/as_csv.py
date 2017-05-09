@@ -13,15 +13,14 @@ def sc(fn, c):
         w.writerows(c)
 
 
-english = lj('english.json')
+categories = lj('categories.json')
 
-legend = ["n", "name", "audio", "page_name",
-          "question", "answer", "verseText", "verseLocation"]
+legend = ["n", "name", "audio", "page_name", "question",
+          "answer", "verseText", "verseLocation", "album", "vol"]
 
-for album in english:
-    fn = 'to_csv/' + \
-        ' '.join(("Vol", str(album['vol']), album['name'])) + '.csv'
+for cat in categories:
+    fn = 'as_csv/' + cat['name'] + '.csv'
 
-    rows = [[song[l] for l in legend] for song in album['songs']]
+    rows = [[song[l] for l in legend] for song in cat['songs']]
 
     sc(fn, [legend] + rows)
